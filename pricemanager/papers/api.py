@@ -1,5 +1,5 @@
 from rest_framework.decorators import permission_classes
-from models import Papers
+from .models import Papers
 from rest_framework import viewsets, permissions
 from .serializers import PapersSerializer
 
