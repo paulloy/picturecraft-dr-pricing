@@ -1,0 +1,1 @@
+export const GET_PAPERS: String = 'GET_PAPERS';

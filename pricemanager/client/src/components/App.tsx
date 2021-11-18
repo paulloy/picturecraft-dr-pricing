@@ -1,8 +1,18 @@
 import React from 'react';
 import ReactDOM from 'react-dom';
 
+import { Provider } from 'react-redux';
+import store from '../store';
+
+// Component imports
+import Header from './header/Header';
+
 function App() {
-    return <h1>Riser Friends</h1>
+    return (
+        <Provider store={store}>
+            <Header />
+        </Provider>
+    )
 }
 
 ReactDOM.render(<App />, document.getElementById('app'));
