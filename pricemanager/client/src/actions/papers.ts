@@ -1,9 +1,10 @@
 import axios from "axios";
+import { Dispatch } from "redux";
 
 import { GET_PAPERS } from "./types";
 
-// GET PAPERS
-export const getPapers = () => dispatch => {
+// GET ALL PAPERS
+export const getPapers = () => (dispatch: Dispatch) => {
     axios
         .get('/api/papers/')
         .then(res => {
