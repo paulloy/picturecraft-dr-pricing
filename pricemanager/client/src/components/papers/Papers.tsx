@@ -25,6 +25,8 @@ export default function Papers() {
         length: 0
     });
 
+    const [selectedPaper, setSelectedPaper] = useState('');
+
     return (
         <>
             {/* IMAGE DIMENSIONS */}
@@ -67,12 +69,16 @@ export default function Papers() {
                 </span>
             </div>
             {/* /IMAGE DIMENSIONS */}
-            <select defaultValue="">
-                <option disabled value="">Please select a paper</option>
-                { papers.map((paper: PaperType) => (
-                    <option key={paper.id} value={paper.name}>{paper.name}</option>
-                )) }
-            </select>
+            {/* PAPER SELECTOR */}
+            <div className="border border-black p-3 flex flex-col items-center">
+                <select defaultValue="" className="border border-black mt-2" onChange={(e: ChangeEvent<HTMLSelectElement>) => setSelectedPaper(papers.filter((paper: PaperType) => paper.name === e.target.value))}>
+                    <option disabled value="">Please select a paper</option>
+                    { papers.map((paper: PaperType) => (
+                        <option key={paper.id} value={paper.name}>{paper.name}</option>
+                        )) }
+                </select>
+            </div>
+            {/* /PAPER SELECTOR */}
         </>
     );
 }
