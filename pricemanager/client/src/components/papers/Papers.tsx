@@ -97,12 +97,12 @@ export default function Papers() {
     }, [selectedPaper, lengthInputs, lengthUnit]);
 
     return (
-        <>
+        <div className="grid grid-cols-3 gap-4 p-3 bg-blue-100">
             {/* IMAGE DIMENSIONS */}
-            <div className="flex flex-col items-center p-5 border border-black">
+            <div className="flex flex-col items-center p-5 border border-black rounded-lg">
                 <select 
+                    className="block mb-3 border border-black w-full p-3 text-center" 
                     defaultValue="inches" 
-                    className="block mb-3 border border-black" 
                     onChange={(e: ChangeEvent<HTMLSelectElement>) => {
                             setLengthUnit(e.target.value);
                             setLengthInputs({ width: 0, length: 0,  qty: 1 });
@@ -110,10 +110,10 @@ export default function Papers() {
                     <option value="inches">inches</option>
                     <option value="cm">cm</option>
                 </select>
-                <span className="block mb-3 p-3 border border-black">
-                    <label>Width</label>
+                <span className="block mb-3 p-3 grid grid-cols-3 w-full">
+                    <label className="justify-end flex items-center pr-3">Width</label>
                     <input 
-                        className="border ml-3 border-black text-right" 
+                        className="border border-black text-right py-1.5" 
                         type="number" 
                         step="0.01" 
                         min="0" 
@@ -121,12 +121,12 @@ export default function Papers() {
                         value={ lengthInputs.width }
                         onChange={ (e: ChangeEvent<HTMLInputElement>) => setLengthInputs({ ...lengthInputs, width: e.target.valueAsNumber }) }
                         onBlur={ (e: FocusEvent<HTMLInputElement>) => setLengthInputs({ ...lengthInputs, width: ((Math.round(e.target.valueAsNumber * 100)) / 100) }) }/>
-                    <span className="ml-3">{ lengthUnit }</span>
+                    <span className="text-left flex items-center justify-start pl-3">{ lengthUnit }</span>
                 </span>
-                <span className="block mb-3 p-3 border border-black">
-                    <label>Length</label>
+                <span className="block mb-3 p-3 grid grid-cols-3 w-full">
+                    <label className="justify-end flex items-center pr-3">Length</label>
                     <input 
-                        className="border ml-3 border-black text-right" 
+                        className="border border-black text-right py-1.5" 
                         type="number" 
                         step="0.01" 
                         min="0" 
@@ -134,12 +134,12 @@ export default function Papers() {
                         value={ lengthInputs.length }
                         onChange={ (e: ChangeEvent<HTMLInputElement>) => setLengthInputs({ ...lengthInputs, length: e.target.valueAsNumber }) }
                         onBlur={ (e: FocusEvent<HTMLInputElement>) => setLengthInputs({ ...lengthInputs, length: ((Math.round(e.target.valueAsNumber * 100)) / 100) }) }/>
-                    <span className="ml-3">{ lengthUnit }</span>
+                    <span className="text-left flex items-center justify-start pl-3">{ lengthUnit }</span>
                 </span>
-                <span className="block mb-3 p-3 border border-black">
-                    <label>Quantity</label>
+                <span className="block mb-3 p-3 w-full grid grid-cols-2">
+                    <label className="justify-center flex items-center pr-3">Quantity</label>
                     <input 
-                        className="border ml-3 border-black text-right" 
+                        className="border border-black text-right py-1.5" 
                         type="number" 
                         step="1" 
                         min="1" 
@@ -151,8 +151,8 @@ export default function Papers() {
             </div>
             {/* /IMAGE DIMENSIONS */}
             {/* PAPER SELECTOR */}
-            <div className="border border-black p-3 flex flex-col items-center">
-                <select defaultValue="" className="border border-black mt-2" onChange={(e: ChangeEvent<HTMLSelectElement>) => setSelectedPaper(papers.filter((paper: PaperType) => paper.name === e.target.value))}>
+            <div className="border border-black p-3 flex rounded-lg flex-col items-center">
+                <select defaultValue="" className="block border border-black w-full p-3 text-center" onChange={(e: ChangeEvent<HTMLSelectElement>) => setSelectedPaper(papers.filter((paper: PaperType) => paper.name === e.target.value))}>
                     <option disabled value="">Please select a paper</option>
                     { papers.map((paper: PaperType) => (
                         <option key={paper.id} value={paper.name}>{paper.name}</option>
@@ -161,49 +161,49 @@ export default function Papers() {
             </div>
             {/* /PAPER SELECTOR */}
             {/* ORDER DETAILS */}
-            <div className="border border-black p-3 flex flex-col items-center">
+            <div className="border border-black rounded-lg p-3 flex flex-col items-center">
                 <table>
                     <tbody>
-                        <tr>
-                            <td>Width</td>
-                            <td>{ lengthInputs.width } { lengthUnit }</td>
+                        <tr className="grid grid-cols-2 gap-4">
+                            <td className="text-right">Width</td>
+                            <td className="text-left">{ lengthInputs.width } { lengthUnit }</td>
                         </tr>
-                        <tr>
-                            <td>Length</td>
-                            <td>{ lengthInputs.length } { lengthUnit }</td>
+                        <tr className="grid grid-cols-2 gap-4">
+                            <td className="text-right">Length</td>
+                            <td className="text-left">{ lengthInputs.length } { lengthUnit }</td>
                         </tr>
-                        <tr>
-                            <td>Paper Type</td>
-                            <td>{ selectedPaper.length === 0 ? 'Please select a paper' : selectedPaper[0].name }</td>
+                        <tr className="grid grid-cols-2 gap-4">
+                            <td className="text-right">Paper Type</td>
+                            <td className="text-left">{ selectedPaper.length === 0 ? 'Please select a paper' : selectedPaper[0].name }</td>
                         </tr>
-                        <tr>
-                            <td>Quantity</td>
-                            <td>{ lengthInputs.qty }</td>
+                        <tr className="grid grid-cols-2 gap-4">
+                            <td className="text-right">Quantity</td>
+                            <td className="text-left">{ lengthInputs.qty }</td>
                         </tr>
-                        <tr>
-                            <td>Net Total</td>
-                            <td>£{ totals.netTotal.toFixed(2) }</td>
+                        <tr className="grid grid-cols-2 gap-4">
+                            <td className="text-right">Net Total</td>
+                            <td className="text-left">£{ totals.netTotal.toFixed(2) }</td>
                         </tr>
-                        <tr>
-                            <td>VAT</td>
-                            <td>£{ totals.vat.toFixed(2) }</td>
+                        <tr className="grid grid-cols-2 gap-4">
+                            <td className="text-right">Discount</td>
+                            <td className="text-left text-red-600"><span className="mr-2">{ totals.discountPercentage }%</span>- £{ totals.discount.toFixed(2) }</td>
                         </tr>
-                        <tr>
-                            <td>Discount</td>
-                            <td><span className="text-red-600 mr-2">{ totals.discountPercentage }%</span>£{ totals.discount.toFixed(2) }</td>
+                        <tr className="grid grid-cols-2 gap-4">
+                            <td className="text-right">VAT</td>
+                            <td className="text-left">£{ totals.vat.toFixed(2) }</td>
                         </tr>
-                        <tr>
-                            <td>Sub Total</td>
-                            <td>£{ totals.subTotal.toFixed(2) }</td>
+                        <tr className="grid grid-cols-2 gap-4">
+                            <td className="text-right">Sub Total</td>
+                            <td className="text-left">£{ totals.subTotal.toFixed(2) }</td>
                         </tr>
-                        <tr>
-                            <td>Total</td>
-                            <td>£{ totals.total.toFixed(2) }</td>
+                        <tr className="grid grid-cols-2 gap-4">
+                            <td className="text-right">Total</td>
+                            <td className="text-left">£{ totals.total.toFixed(2) }</td>
                         </tr>
                     </tbody>
                 </table>
             </div>
             {/* /ORDER DETAILS */}
-        </>
+        </div>
     );
 }
