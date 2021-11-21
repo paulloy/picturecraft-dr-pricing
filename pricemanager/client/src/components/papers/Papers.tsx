@@ -26,27 +26,36 @@ export default function Papers() {
         qty: 1
     });
 
-    const [selectedPaper, setSelectedPaper] = useState('');
+    const [selectedPaper, setSelectedPaper] = useState([]);
 
     const [totals, setTotals] = useState({
         netTotal: 0,
         vat: 0,
         discountPercentage: 0,
         discount: 0,
-        subTotal: 0,
-        total: 0
+        subTotal: 0
     });
+
+    // round prices to 2 decimal places
+    const roundValue = (value: number) => Math.round(value * 100) / 100;
 
     const convert = require('convert-length');
 
     const calculateTotals = () => {
         // return null if no paper is selected
-        if (selectedPaper.length === 0) return null;
+        if (selectedPaper.length === 0) return;
 
         let { width, length, qty } = lengthInputs;
-        // Cost of paper is the price of a 16" x 20" print
+        // Cost of paper is the price of a 16" x 20" print (includes VAT)
         const standardArea = 16 * 20;
+        // cost of selected paper (remove VAT by dividing by 1.2) divided by the standard area
         const costPerUnitArea = (selectedPaper[0].cost / 1.2 ) / standardArea; 
+
+        // if selected, convert cm into inches
+        if (lengthUnit === 'cm') {
+            width = convert(width, 'cm', 'in');
+            length = convert(length, 'cm', 'in');
+        }
 
         let discountPercentage;
         // Discount is dependant on quantity
@@ -60,35 +69,28 @@ export default function Papers() {
             discountPercentage = 0;
         }
 
-        // if selected, convert cm into inches
-        if (lengthUnit === 'cm') {
-            width = convert(width, 'cm', 'in');
-            length = convert(length, 'cm', 'in');
-        }
-
         // Net Total = Product of the image area (width * length) and costPerUnitArea and quantity
-        let netTotal = (Math.round(((width * length) * costPerUnitArea) * 100) / 100) * qty;
-
+        let netTotal = roundValue((width * length) * costPerUnitArea) * qty;
         
+        // discount is the product of netTotal & discountPercentage, unless the latter variable is 0
         let discount;
         if (discountPercentage !== 0) {
-            discount = Math.round((netTotal * discountPercentage) * 100) / 100;
+            discount = roundValue(netTotal * discountPercentage);
         } else {
             discount = 0;
         }
+        // USE CHANGE: discountPercentage is multiplied by 100 so it can be displayed on the UI. e.g. 0.2 becomes 20%
         discountPercentage = discountPercentage * 100;
 
-        let vat = Math.round(((netTotal - discount) * 0.2) * 100) / 100;
+        let vat = roundValue((netTotal - discount) * 0.2);
         let subTotal = (netTotal - discount) + vat;
-        let total = subTotal;
 
         setTotals({
             netTotal: netTotal,
             vat: vat,
             discountPercentage: discountPercentage,
             discount: discount,
-            subTotal: subTotal,
-            total: total
+            subTotal: subTotal
         });
     }
 
@@ -120,7 +122,7 @@ export default function Papers() {
                         max="1000" 
                         value={ lengthInputs.width }
                         onChange={ (e: ChangeEvent<HTMLInputElement>) => setLengthInputs({ ...lengthInputs, width: e.target.valueAsNumber }) }
-                        onBlur={ (e: FocusEvent<HTMLInputElement>) => setLengthInputs({ ...lengthInputs, width: ((Math.round(e.target.valueAsNumber * 100)) / 100) }) }/>
+                        onBlur={ (e: FocusEvent<HTMLInputElement>) => setLengthInputs({ ...lengthInputs, width: roundValue(e.target.valueAsNumber) }) }/>
                     <span className="text-left flex items-center justify-start pl-3">{ lengthUnit }</span>
                 </span>
                 <span className="block mb-3 p-3 grid grid-cols-3 w-full">
@@ -133,7 +135,7 @@ export default function Papers() {
                         max="1000" 
                         value={ lengthInputs.length }
                         onChange={ (e: ChangeEvent<HTMLInputElement>) => setLengthInputs({ ...lengthInputs, length: e.target.valueAsNumber }) }
-                        onBlur={ (e: FocusEvent<HTMLInputElement>) => setLengthInputs({ ...lengthInputs, length: ((Math.round(e.target.valueAsNumber * 100)) / 100) }) }/>
+                        onBlur={ (e: FocusEvent<HTMLInputElement>) => setLengthInputs({ ...lengthInputs, length: roundValue(e.target.valueAsNumber) }) }/>
                     <span className="text-left flex items-center justify-start pl-3">{ lengthUnit }</span>
                 </span>
                 <span className="block mb-3 p-3 w-full grid grid-cols-2">
@@ -195,10 +197,6 @@ export default function Papers() {
                         <tr className="grid grid-cols-2 gap-4">
                             <td className="text-right">Sub Total</td>
                             <td className="text-left">£{ totals.subTotal.toFixed(2) }</td>
-                        </tr>
-                        <tr className="grid grid-cols-2 gap-4">
-                            <td className="text-right">Total</td>
-                            <td className="text-left">£{ totals.total.toFixed(2) }</td>
                         </tr>
                     </tbody>
                 </table>
