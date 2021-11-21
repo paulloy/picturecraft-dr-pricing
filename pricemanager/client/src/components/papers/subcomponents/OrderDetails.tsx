@@ -1,6 +1,14 @@
 import React from 'react';
+import { LengthInputs, PaperType, Totals } from '../types/types';
 
-export default function OrderDetails({ lengthInputs, lengthUnit, selectedPaper, totals }) {
+interface Props {
+    lengthInputs: LengthInputs;
+    lengthUnit: string;
+    selectedPaper: PaperType[];
+    totals: Totals;
+}
+
+export default function OrderDetails({ lengthInputs, lengthUnit, selectedPaper, totals }: Props) {
     let { width, length, qty } = lengthInputs;
     
     return (

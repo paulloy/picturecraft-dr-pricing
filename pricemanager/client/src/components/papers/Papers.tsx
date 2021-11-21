@@ -9,13 +9,6 @@ import PaperSelector from './subcomponents/PaperSelector';
 import ImageDimensions from './subcomponents/ImageDimensions';
 
 
-// types interface for paper objects
-export interface PaperType {
-    id: number;
-    name: string;
-    cost: number;
-}
-
 // round prices to 2 decimal places
 export const roundValue = (value: number) => Math.round(value * 100) / 100;
 
