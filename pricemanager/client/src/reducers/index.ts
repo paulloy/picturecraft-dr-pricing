@@ -1,8 +1,10 @@
 import { combineReducers } from "redux";
 import papers from './papers';
+import cart from './cart';
 
 export const rootReducer = combineReducers({
-    papers
+    papers,
+    cart
 });
 
 export type RootState = ReturnType<typeof rootReducer>
