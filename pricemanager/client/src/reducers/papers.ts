@@ -1,10 +1,15 @@
 import { GET_PAPERS } from "../actions/types";
 
-const initalState = {
+interface Action { 
+    type: string, 
+    payload: { id: number, name: string, cost: number }
+}
+
+const initalState: any = {
     papers: []
 }
 
-export default function(state = initalState, action) {
+export default function(state = initalState, action: Action) {
     switch(action.type) {
         case GET_PAPERS:
             return {
