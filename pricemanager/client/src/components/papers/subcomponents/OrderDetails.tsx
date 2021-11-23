@@ -1,4 +1,6 @@
 import React from 'react';
+import { useDispatch } from 'react-redux';
+import { addToCart } from '../../../actions/cart';
 import { LengthInputs, PaperType, Totals } from '../types/types';
 
 interface Props {
@@ -10,6 +12,20 @@ interface Props {
 
 export default function OrderDetails({ lengthInputs, lengthUnit, selectedPaper, totals }: Props) {
     let { width, length, qty } = lengthInputs;
+
+    const dispatch = useDispatch();
+
+    const order = {
+        width: width,
+        length: length,
+        qty: qty,
+        unit: lengthUnit,
+        paper: selectedPaper.length === 0 ? 'Please select a paper' : selectedPaper[0].name,
+        netTotal: totals.netTotal.toFixed(2),
+        discount: totals.discount.toFixed(2),
+        vat: totals.vat.toFixed(2),
+        subTotal: totals.subTotal.toFixed(2)
+    }
     
     return (
         <div className="border border-black rounded-lg p-3 flex flex-col items-center">
@@ -49,6 +65,7 @@ export default function OrderDetails({ lengthInputs, lengthUnit, selectedPaper, 
                         </tr>
                     </tbody>
                 </table>
+                <button className="bg-blue-300 p-2" onClick={() => dispatch(addToCart(order))}>Add To Cart</button>
             </div>
     );
 }
