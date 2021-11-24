@@ -1,6 +1,7 @@
 import React from 'react';
-import { useDispatch } from 'react-redux';
+import { useDispatch, useSelector } from 'react-redux';
 import { addToCart } from '../../../actions/cart';
+import { RootState } from '../../../reducers';
 import { LengthInputs, PaperType, Totals } from '../types/types';
 
 interface Props {
@@ -21,10 +22,20 @@ export default function OrderDetails({ lengthInputs, lengthUnit, selectedPaper, 
         qty: qty,
         unit: lengthUnit,
         paper: selectedPaper.length === 0 ? 'Please select a paper' : selectedPaper[0].name,
-        netTotal: totals.netTotal.toFixed(2),
-        discount: totals.discount.toFixed(2),
-        vat: totals.vat.toFixed(2),
-        subTotal: totals.subTotal.toFixed(2)
+        netTotal: totals.netTotal,
+        discount: totals.discount,
+        vat: totals.vat,
+        subTotal: totals.subTotal
+    }
+
+    const handleAddToCart = () => {
+        if (totals.subTotal == 0) {
+            // handle errors here
+            console.log('Please select a paper');
+            return;
+        }
+        // check that item is not already in cart
+        dispatch(addToCart(order));
     }
     
     return (
@@ -65,7 +76,7 @@ export default function OrderDetails({ lengthInputs, lengthUnit, selectedPaper, 
                         </tr>
                     </tbody>
                 </table>
-                <button className="bg-blue-300 p-2" onClick={() => dispatch(addToCart(order))}>Add To Cart</button>
+                <button className="bg-blue-300 p-2" onClick={() => handleAddToCart()}>Add To Cart</button>
             </div>
     );
 }
