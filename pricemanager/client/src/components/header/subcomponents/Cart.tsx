@@ -4,15 +4,15 @@ import { CartItem, removeFromCart } from "../../../actions/cart";
 import { RootState } from '../../../reducers/index';
 
 
-export default function Cart() {
+export default function Cart({ displayCart, onCloseCart = f => f }) {
     const dispatch = useDispatch();
 
     const cart = useSelector((state: RootState) => state.cart.cart);
 
     return (
-        <div className="fixed z-10 p-5 top-96 border border-black right-0 bg-gray-100 w-screen h-96">
+        <div className={`z-10 p-5 top-0 border border-black right-0 bg-gray-100 w-screen h-96 ${displayCart ? 'fixed' : 'hidden'}`}>
             <h2 className="text-2xl my-4 text-center">Cart</h2>
-            <button className="float-right mr-5 bg-gray-300 py-2 px-1">CLOSE CART</button>
+            <button onClick={() => onCloseCart(false)} className="float-right mr-5 bg-gray-300 py-2 px-1">CLOSE CART</button>
             <table className="mx-auto">
                 <thead>
                     <tr className="grid grid-cols-9">
