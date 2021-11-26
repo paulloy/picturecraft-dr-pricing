@@ -1,4 +1,4 @@
-import React, { ChangeEvent, FocusEvent, useEffect, useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { getPapers } from '../../actions/papers';
 import { RootState } from '../../reducers';
