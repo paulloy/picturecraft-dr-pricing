@@ -1,4 +1,4 @@
-import { DELETE_PAPER, GET_PAPERS } from "../actions/types";
+import { ADD_PAPER, DELETE_PAPER, GET_PAPERS } from "../actions/types";
 import { PaperType } from "../components/papers/types/types";
 
 interface Action { 
@@ -21,6 +21,11 @@ export default function(state = initalState, action: any) {
             return {
                 ...state,
                 papers: state.papers.filter((paper: PaperType) => paper.id !== action.payload)
+            }
+        case ADD_PAPER:
+            return {
+                ...state,
+                papers: [...state.papers, action.payload]
             }
         default:
             return state;
