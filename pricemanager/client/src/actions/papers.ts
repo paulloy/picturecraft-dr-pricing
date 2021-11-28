@@ -1,7 +1,8 @@
 import axios from "axios";
 import { Dispatch } from "redux";
+import { PaperType } from "../components/papers/types/types";
 
-import { DELETE_PAPER, GET_PAPERS, ADD_PAPER } from "./types";
+import { DELETE_PAPER, GET_PAPERS, ADD_PAPER, UPDATE_PAPER } from "./types";
 
 // GET ALL PAPERS
 export const getPapers = () => (dispatch: Dispatch) => {
@@ -41,3 +42,17 @@ export const addPaper = (paper: {name: string, cost: number}) => (dispatch: Disp
         })
         .catch(err => console.log(err));
 }
+
+// UPDATE A PAPER
+export const updatePaper = (paper: PaperType) => (dispatch: Dispatch) => {
+    axios
+        .put(`/api/papers/${paper.id}/`, paper)
+        .then(res => {
+            dispatch({
+                type: UPDATE_PAPER,
+                payload: res.data
+            });
+        })
+        .catch(err => console.log(err));
+}
+

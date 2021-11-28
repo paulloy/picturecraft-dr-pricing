@@ -1,4 +1,4 @@
-import { ADD_PAPER, DELETE_PAPER, GET_PAPERS } from "../actions/types";
+import { ADD_PAPER, DELETE_PAPER, GET_PAPERS, UPDATE_PAPER } from "../actions/types";
 import { PaperType } from "../components/papers/types/types";
 
 interface Action { 
@@ -26,6 +26,14 @@ export default function(state = initalState, action: any) {
             return {
                 ...state,
                 papers: [...state.papers, action.payload]
+            }
+        case UPDATE_PAPER:
+            const i = state.papers.findIndex((paper: PaperType) => paper.id === action.payload.id);
+            const newArr = [...state.papers];
+            newArr[i] = action.payload;
+            return {
+                ...state,
+                papers: newArr
             }
         default:
             return state;
