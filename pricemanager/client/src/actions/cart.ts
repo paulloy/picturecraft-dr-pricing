@@ -1,4 +1,5 @@
 import { Dispatch } from "redux";
+import { createMessage } from "./messages";
 import { ADD_TO_CART, REMOVE_FROM_CART } from "./types";
 
 export interface CartItem {
@@ -15,6 +16,7 @@ export interface CartItem {
 
 // ADD ITEM TO CART
 export const addToCart = (cartItem: CartItem) => (dispatch: Dispatch) => {
+    dispatch(createMessage({ success: `${cartItem.paper} | (${cartItem.width} x ${cartItem.length}) ${cartItem.unit} | Quantity: ${cartItem.qty} | Added to cart` }));
     dispatch({
         type: ADD_TO_CART,
         payload: cartItem
@@ -23,6 +25,7 @@ export const addToCart = (cartItem: CartItem) => (dispatch: Dispatch) => {
 
 // REMOVE ITEM FROM CART
 export const removeFromCart = (cartItem: CartItem) => (dispatch: Dispatch) => {
+    dispatch(createMessage({ success: `${cartItem.paper} | (${cartItem.width} x ${cartItem.length}) ${cartItem.unit} | Quantity: ${cartItem.qty} | Removed from cart` }));
     dispatch({
         type: REMOVE_FROM_CART,
         payload: cartItem

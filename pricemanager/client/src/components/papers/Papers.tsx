@@ -2,6 +2,7 @@ import React, { useEffect, useState } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { getPapers } from '../../actions/papers';
 import { RootState } from '../../reducers';
+import { Link } from 'react-router-dom';
 
 // Sub-components
 import OrderDetails from './subcomponents/OrderDetails';
@@ -99,22 +100,27 @@ export default function Papers() {
     }, [selectedPaper, lengthInputs, lengthUnit]);
 
     return (
-        <div className="grid grid-cols-3 gap-4 p-3 bg-blue-100">
-            {/* IMAGE DIMENSIONS */}
-            <ImageDimensions 
-                lengthInputs={lengthInputs}
-                lengthUnit={lengthUnit}
-                onLengthChange={(newLengths) => setLengthInputs(newLengths)}
-                onUnitChange={(newUnit) => setLengthUnit(newUnit)}/>
-            {/* /IMAGE DIMENSIONS */}
-            <PaperSelector 
-                papers={papers}
-                onPaperSelect={(selectedPaper) => setSelectedPaper(selectedPaper)}/>
-            <OrderDetails 
-                lengthInputs={lengthInputs} 
-                lengthUnit={lengthUnit} 
-                selectedPaper={selectedPaper} 
-                totals={totals}/>
-        </div>
+        <>
+            <div>
+                <Link to='settings/papers'>Open Settings</Link>
+            </div>
+            <div className="grid grid-cols-3 gap-4 p-3 bg-blue-100">
+                {/* IMAGE DIMENSIONS */}
+                <ImageDimensions 
+                    lengthInputs={lengthInputs}
+                    lengthUnit={lengthUnit}
+                    onLengthChange={(newLengths) => setLengthInputs(newLengths)}
+                    onUnitChange={(newUnit) => setLengthUnit(newUnit)}/>
+                {/* /IMAGE DIMENSIONS */}
+                <PaperSelector 
+                    papers={papers}
+                    onPaperSelect={(selectedPaper) => setSelectedPaper(selectedPaper)}/>
+                <OrderDetails 
+                    lengthInputs={lengthInputs} 
+                    lengthUnit={lengthUnit} 
+                    selectedPaper={selectedPaper} 
+                    totals={totals}/>
+            </div>
+        </>
     );
 }
