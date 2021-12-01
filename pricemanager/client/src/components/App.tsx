@@ -33,6 +33,7 @@ function App() {
                     <Route path='/cart' element={<Cart />} />
                     <Route path='/settings/papers' element={<PaperSettings />} />
                 </Routes>
+                <img className='fixed top-0 left-0 w-screen h-screen object-cover opacity-50 z-0' src="../../static/img/background.jpg" alt="background image from https://wallpapercave.com/w/50PoWIh" />
             </AlertProvider>
         </Provider>
     )

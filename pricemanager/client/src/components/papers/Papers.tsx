@@ -100,11 +100,11 @@ export default function Papers() {
     }, [selectedPaper, lengthInputs, lengthUnit]);
 
     return (
-        <>
+        <div className='z-10 relative'>
             <div>
                 <Link to='settings/papers'>Open Settings</Link>
             </div>
-            <div className="grid grid-cols-3 gap-4 p-3 bg-blue-100">
+            <div className="grid grid-cols-3 gap-4 p-5">
                 {/* IMAGE DIMENSIONS */}
                 <ImageDimensions 
                     lengthInputs={lengthInputs}
@@ -121,6 +121,6 @@ export default function Papers() {
                     selectedPaper={selectedPaper} 
                     totals={totals}/>
             </div>
-        </>
+        </div>
     );
 }

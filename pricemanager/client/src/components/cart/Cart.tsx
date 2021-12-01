@@ -30,7 +30,7 @@ export default function Cart() {
     }, [cart]);
 
     return (
-        <div className='z-10 p-5 top-0 border border-black right-0 bg-gray-100 w-screen h-screen'>
+        <div className='z-10 p-5 z-10 relative top-0 border border-black right-0 bg-gray-100 w-screen h-screen'>
             <h2 className="text-2xl my-4 text-center">Cart</h2>
             <table className="mx-auto">
                 <thead>

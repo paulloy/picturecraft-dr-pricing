@@ -40,7 +40,7 @@ export default function PaperSettings() {
     }
 
     return (
-        <>
+        <div className='z-10 bg-white relative'>
             {/* ADD PAPER FORM */}
             <form className='flex flex-col w-96 mx-auto p-2 border border-black'>
                 <h2 className='text-center 2xl'>ADD PAPER</h2>
@@ -93,6 +93,6 @@ export default function PaperSettings() {
                     )) }
                 </tbody>
             </table>
-        </>
+        </div>
     );
 }
