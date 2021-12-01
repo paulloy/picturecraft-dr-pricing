@@ -1,5 +1,5 @@
 import React, { ChangeEvent, FocusEvent, MouseEvent } from 'react';
-import { roundValue } from '../Papers';
+import { roundValue } from '../../../services/roundValue';
 
 export default function ImageDimensions({ lengthInputs, lengthUnit, onLengthChange = f => f, onUnitChange = f => f }) {
     let { width, length, qty } = lengthInputs;
