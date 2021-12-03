@@ -34,6 +34,7 @@ INSTALLED_APPS = [
     'knox',
     'papers',
     'client',
+    'accounts',
 ]
 
 REST_FRAMEWORK = {
