@@ -5,8 +5,14 @@ from .serializers import PapersSerializer
 
 
 class PapersViewSet(viewsets.ModelViewSet):
-    queryset = Papers.objects.all()
     permission_classes = [
-        permissions.AllowAny
+        permissions.IsAuthenticated
     ]
+
     serializer_class = PapersSerializer
+
+    def get_queryset(self):
+        return self.request.user.papers.all()
+
+    def perform_create(self, serializer):
+        serializer.save(owner=self.request.user)
