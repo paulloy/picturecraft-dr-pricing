@@ -1,7 +1,7 @@
 import React from 'react';
 import ReactDOM from 'react-dom';
 
-import { BrowserRouter as Router, Routes, Route } from 'react-router-dom';
+import { HashRouter as Router, Routes, Route } from 'react-router-dom';
 
 import { Provider as AlertProvider } from 'react-alert';
 import AlertTemplate from 'react-alert-template-basic';
@@ -15,6 +15,7 @@ import Alerts from './header/Alerts';
 import Papers from './papers/Papers';
 import Cart from './cart/Cart';
 import PaperSettings from './settings/papers/PaperSettings';
+import Login from './accounts/Login';
 
 // Alert options
 const alertOptions = {
@@ -32,6 +33,7 @@ function App() {
                     <Route path='/' element={<Papers />} />
                     <Route path='/cart' element={<Cart />} />
                     <Route path='/settings/papers' element={<PaperSettings />} />
+                    <Route path='/accounts/login' element={<Login />} />
                 </Routes>
                 <img className='fixed top-0 left-0 w-screen h-screen object-cover opacity-50 z-0' src="../../static/img/background.jpg" alt="background image from https://wallpapercave.com/w/50PoWIh" />
             </AlertProvider>
