@@ -4,6 +4,29 @@ import { roundValue } from '../../../services/roundValue';
 export default function ImageDimensions({ lengthInputs, lengthUnit, onLengthChange = f => f, onUnitChange = f => f }) {
     let { width, length, qty } = lengthInputs;
 
+    const onInputChange = (e: ChangeEvent<HTMLInputElement>) => {
+        onLengthChange({
+            ...lengthInputs,
+            [e.target.name]: e.target.valueAsNumber
+        });
+    }
+
+    const onInputBlur = (e: FocusEvent<HTMLInputElement>) => {   
+        // qty is rounded to nearest integer
+        if (e.target.name === 'qty') {              
+            onLengthChange({
+                ...lengthInputs,
+                [e.target.name]: Math.round(e.target.valueAsNumber)
+            });
+        // other inputs are rounded to nearest 2 decimal places
+        } else {
+            onLengthChange({
+                ...lengthInputs,
+                [e.target.name]: roundValue(e.target.valueAsNumber)
+            });
+        }     
+    }
+
     return (
         <div className="flex flex-col border-gray-500 border-2 items-center p-5 bg-green-50 rounded-lg">
             <h2 className='font-serif text-2xl w-full h-12 text-center py-2'>Step 1 - Image Dimensions</h2>
@@ -27,9 +50,10 @@ export default function ImageDimensions({ lengthInputs, lengthUnit, onLengthChan
                     step="0.01" 
                     min="0" 
                     max="1000" 
+                    name='width'
                     value={ width }
-                    onChange={ (e: ChangeEvent<HTMLInputElement>) => onLengthChange({ ...lengthInputs, width: e.target.valueAsNumber }) }
-                    onBlur={ (e: FocusEvent<HTMLInputElement>) => onLengthChange({ ...lengthInputs, width: roundValue(e.target.valueAsNumber) }) }/>
+                    onChange={ e => onInputChange(e) }
+                    onBlur={ e => onInputBlur(e) }/>
                 <span className="text-left flex items-center justify-start pl-3 text-lg">{ lengthUnit }</span>
             </span>
             <span className="block mb-3 p-3 flex flex-row justify-center w-full">
@@ -40,9 +64,10 @@ export default function ImageDimensions({ lengthInputs, lengthUnit, onLengthChan
                     step="0.01" 
                     min="0" 
                     max="1000" 
+                    name='length'
                     value={ length }
-                    onChange={ (e: ChangeEvent<HTMLInputElement>) => onLengthChange({ ...lengthInputs, length: e.target.valueAsNumber }) }
-                    onBlur={ (e: FocusEvent<HTMLInputElement>) => onLengthChange({ ...lengthInputs, length: roundValue(e.target.valueAsNumber) }) }/>
+                    onChange={ e => onInputChange(e) }
+                    onBlur={ e => onInputBlur(e) }/>
                 <span className="text-left flex items-center justify-start pl-3 text-lg">{ lengthUnit }</span>
             </span>
             <hr className='border-t-2 border-gray-500 w-full my-5' />
@@ -58,9 +83,10 @@ export default function ImageDimensions({ lengthInputs, lengthUnit, onLengthChan
                         step="1" 
                         min="1" 
                         max="1000" 
+                        name='qty'
                         value={ qty }
-                        onChange={ (e: ChangeEvent<HTMLInputElement>) => onLengthChange({ ...lengthInputs, qty: e.target.valueAsNumber }) }
-                        onBlur={ (e: FocusEvent<HTMLInputElement>) => onLengthChange({ ...lengthInputs, qty: Math.round(e.target.valueAsNumber) }) }/>        
+                        onChange={ e => onInputChange(e) }
+                        onBlur={ e => onInputBlur(e) }/>        
                     <button 
                         className='bg-gray-500 p-3 text-white h-12 w-12 rounded-r-lg'
                         onClick={(e: MouseEvent<HTMLButtonElement>) => lengthInputs.qty <= 999 ? onLengthChange({ ...lengthInputs, qty: lengthInputs.qty + 1 }) : onLengthChange({ ...lengthInputs, qty: 1000 })}><i className="fas fa-chevron-right"></i></button>            
