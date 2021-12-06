@@ -1,10 +1,10 @@
 import React from 'react';
 import { useSelector } from 'react-redux';
-import { Navigate, Outlet } from 'react-router-dom';
+import { Route, Navigate, Routes } from 'react-router-dom';
 import { RootState } from '../../reducers';
 
-export default function PrivateRoute() {
-    const auth = useSelector((state: RootState) => state.auth.token);
+export default function PrivateRoute({ children }) {
+    const auth = useSelector((state: RootState) => state.auth.isAuthenticated);
 
-    return auth ? <Outlet /> : <Navigate to='/accounts/login' />;
+    return auth ? children : <Navigate to='/accounts/login' />;
 }

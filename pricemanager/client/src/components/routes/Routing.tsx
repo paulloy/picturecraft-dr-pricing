@@ -25,9 +25,14 @@ export default function Routing() {
             <Route path='/settings/papers' element={<PaperSettings />} />
             <Route path='/cart' element={<Cart />} />
             <Route path='/accounts/login' element={<Login />} />
-            <Route path='/' element={<PrivateRoute />}>
-                <Route element={<Papers />}/>
-            </Route>
+            <Route
+                path='/'
+                element={
+                    <PrivateRoute>
+                        <Papers />
+                    </PrivateRoute>
+                }
+            />
         </Routes>
     );
 }
