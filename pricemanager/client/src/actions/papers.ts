@@ -1,6 +1,7 @@
 import axios from "axios";
 import { Dispatch } from "redux";
 import { PaperType } from "../components/papers/types/types";
+import { tokenConfig } from "./auth";
 import { createMessage } from "./messages";
 
 import { DELETE_PAPER, GET_PAPERS, ADD_PAPER, UPDATE_PAPER } from "./types";

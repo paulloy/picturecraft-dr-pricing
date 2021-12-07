@@ -1,11 +1,14 @@
-import React, { useState } from 'react';
-import { useSelector } from 'react-redux';
+import React, { useState, MouseEvent } from 'react';
+import { useDispatch, useSelector } from 'react-redux';
 import { Link } from 'react-router-dom';
+import { logoutUser } from '../../actions/auth';
 import { RootState } from '../../reducers';
 
 function Header() {
 
     const auth = useSelector((state: RootState) => state.auth.isAuthenticated);
+
+    const dispatch = useDispatch();
 
     const authLinks = (
         <>
@@ -16,7 +19,7 @@ function Header() {
                 <Link to='/cart'><i className="fas fa-shopping-cart"></i></Link>
             </li>
             <li className="ml-3.5 text-1">
-                <Link to='/accounts/logout'>LOGOUT</Link>
+                <button onClick={(e) => logout(e)}>Logout</button>
             </li>
         </>
     );
@@ -28,6 +31,11 @@ function Header() {
             </li>
         </>
     )
+
+    const logout = (e: MouseEvent<HTMLButtonElement, globalThis.MouseEvent>) => {
+        e.preventDefault();
+        dispatch(logoutUser());
+    }
 
     return (
         <>
