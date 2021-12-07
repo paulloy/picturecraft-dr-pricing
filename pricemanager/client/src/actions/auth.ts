@@ -7,26 +7,8 @@ import { LOGIN_FAILED, LOGIN_SUCCESS, LOGOUT_SUCCESS, USER_LOADED, USER_LOADING 
 
 // Check token & load user
 export const loadUser = () => (dispatch: Dispatch) => {
-    // user is loading
-    dispatch({ type: USER_LOADING });
-
-    // Get token from store
-    const token = store.getState().auth.token;
-
-    // Headers
-    const config = {
-        headers: {
-            'Content-Type': 'application/json'
-        }
-    }
-
-    // If token, add to headers config
-    if (token) {
-        config.headers['Authorization'] = `Token ${token}`;
-    }
-
     axios
-        .get('/api/auth/user', config)
+        .get('/api/auth/user', tokenConfig())
         .then(res => {
             if (res.data.id === null) {
                 throw 'failed to authenticate user';
@@ -44,21 +26,12 @@ export const loadUser = () => (dispatch: Dispatch) => {
 
 // Login User
 export const loginUser = (username: string, password: string) => (dispatch: Dispatch) => {
-    // user is loading
-    dispatch({ type: USER_LOADING });
-
-    // Headers
-    const config = {
-        headers: {
-            'Content-Type': 'application/json'
-        }
-    }
 
     // Request body
     const body = JSON.stringify({ username, password });
 
     axios
-        .post('/api/auth/login', body, config)
+        .post('/api/auth/login', body, tokenConfig())
         .then(res => {
             if (res.data.id === null) {
                 throw 'failed to authenticate user';
@@ -79,24 +52,8 @@ export const loginUser = (username: string, password: string) => (dispatch: Disp
 
 // Logout User
 export const logoutUser = () => (dispatch: Dispatch) => {
-
-    // Get token from store
-    const token = store.getState().auth.token;
-
-    // Headers
-    const config = {
-        headers: {
-            'Content-Type': 'application/json'
-        }
-    }
-
-    // If token, add to headers config
-    if (token) {
-        config.headers['Authorization'] = `Token ${token}`;
-    }
-
     axios
-        .post('/api/auth/logout/', null, config)
+        .post('/api/auth/logout/', null, tokenConfig())
         .then(res => {
             if (res.data.id === null) {
                 throw 'failed to authenticate user';
@@ -109,4 +66,25 @@ export const logoutUser = () => (dispatch: Dispatch) => {
         .catch(err => {
             console.log(err);
         });
+}
+
+// Setup config with token
+export const tokenConfig = () => {
+    // Get token from state
+    const token = store.getState().auth.token;
+
+    // Headers
+    const config = {
+        headers: {
+            'Content-Type': 'application/json',
+            'Authorization': ''
+        }
+    }
+
+    // If token, add to headers config
+    if (token) {
+        config.headers['Authorization'] = `Token ${token}`;
+    }
+
+    return config;
 }

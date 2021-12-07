@@ -9,7 +9,7 @@ import { DELETE_PAPER, GET_PAPERS, ADD_PAPER, UPDATE_PAPER } from "./types";
 // GET ALL PAPERS
 export const getPapers = () => (dispatch: Dispatch) => {
     axios
-        .get('/api/papers/')
+        .get('/api/papers/', tokenConfig())
         .then(res => {
             dispatch({
                 type: GET_PAPERS,
@@ -22,7 +22,7 @@ export const getPapers = () => (dispatch: Dispatch) => {
 // DELETE ONE PAPER
 export const deletePaper = (id: number) => (dispatch: Dispatch) => {
     axios
-        .delete(`/api/papers/${id}/`)
+        .delete(`/api/papers/${id}/`, tokenConfig())
         .then(res => {
             dispatch(createMessage({ success: 'Paper deleted from the database' }));
             dispatch({
@@ -36,7 +36,7 @@ export const deletePaper = (id: number) => (dispatch: Dispatch) => {
 // ADD A PAPER
 export const addPaper = (paper: {name: string, cost: number}) => (dispatch: Dispatch) => {
     axios
-        .post('/api/papers/', paper)
+        .post('/api/papers/', paper, tokenConfig())
         .then(res => {
             dispatch(createMessage({ success: `Successfully added "${ paper.name }" to the database` }));
             dispatch({
@@ -50,7 +50,7 @@ export const addPaper = (paper: {name: string, cost: number}) => (dispatch: Disp
 // UPDATE A PAPER
 export const updatePaper = (paper: PaperType) => (dispatch: Dispatch) => {
     axios
-        .put(`/api/papers/${paper.id}/`, paper)
+        .put(`/api/papers/${paper.id}/`, paper, tokenConfig())
         .then(res => {
             dispatch(createMessage({ success: 'Paper has been successfully updated' }))
             dispatch({
