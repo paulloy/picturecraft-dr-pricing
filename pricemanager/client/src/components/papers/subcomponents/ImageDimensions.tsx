@@ -1,7 +1,19 @@
 import React, { ChangeEvent, FocusEvent, MouseEvent } from 'react';
 import { roundValue } from '../../../services/roundValue';
+import { LengthInputs } from '../types/types';
 
-export default function ImageDimensions({ lengthInputs, lengthUnit, onLengthChange = f => f, onUnitChange = f => f }) {
+export default function ImageDimensions({ 
+    lengthInputs, 
+    lengthUnit, 
+    onLengthChange = (f: LengthInputs) => f,
+    onUnitChange = (f: string) => f 
+}: {
+    lengthInputs: LengthInputs;
+    lengthUnit: string;
+    onLengthChange: any;
+    onUnitChange: any;
+}) {
+
     let { width, length, qty } = lengthInputs;
 
     const onInputChange = (e: ChangeEvent<HTMLInputElement>) => {
@@ -28,11 +40,11 @@ export default function ImageDimensions({ lengthInputs, lengthUnit, onLengthChan
     }
 
     return (
-        <div className="flex flex-col border-gray-500 border-2 items-center p-5 bg-green-50 rounded-lg">
+        <div className="flex flex-col border-gray-500 border-2 items-center p-5 bg-blue-100 rounded-lg">
             <h2 className='font-serif text-2xl w-full h-12 text-center py-2'>Step 1 - Image Dimensions</h2>
             <hr className='border-t-2 border-gray-500 w-full mb-5' />
             <select 
-                className="block border border-black text-lg w-full p-3 text-center" 
+                className="block border cursor-pointer border-black rounded-lg text-lg w-full p-3 text-center" 
                 defaultValue="inches" 
                 onChange={(e: ChangeEvent<HTMLSelectElement>) => {
                         onUnitChange(e.target.value);
@@ -45,7 +57,7 @@ export default function ImageDimensions({ lengthInputs, lengthUnit, onLengthChan
             <span className="block mb-3 p-3 flex flex-row justify-center w-full">
                 <label className="justify-end flex items-center pr-3 text-lg font-semibold">Width</label>
                 <input 
-                    className="border border-black text-right w-48 py-1.5 text-lg" 
+                    className="border border-black rounded-lg text-right w-48 py-1.5 text-lg" 
                     type="number" 
                     step="0.01" 
                     min="0" 
@@ -59,7 +71,7 @@ export default function ImageDimensions({ lengthInputs, lengthUnit, onLengthChan
             <span className="block mb-3 p-3 flex flex-row justify-center w-full">
                 <label className="justify-end flex items-center pr-3 text-lg font-semibold">Length</label>
                 <input 
-                    className="border border-black text-right w-48 py-1.5 text-lg" 
+                    className="border border-black rounded-lg text-right w-48 py-1.5 text-lg" 
                     type="number" 
                     step="0.01" 
                     min="0" 

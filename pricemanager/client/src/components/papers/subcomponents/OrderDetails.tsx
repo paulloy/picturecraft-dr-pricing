@@ -35,12 +35,11 @@ export default function OrderDetails({ lengthInputs, lengthUnit, selectedPaper, 
             dispatch(createMessage({ error: 'Please enter a valid Order' }));
             return;
         }
-        // check that item is not already in cart
         dispatch(addToCart(order));
     }
     
     return (
-        <div className="flex flex-col relative border-gray-500 border-2 items-center p-5 bg-green-50 rounded-lg">
+        <div className="flex flex-col relative border-gray-500 border-2 items-center p-5 bg-blue-100 rounded-lg">
             <h2 className='font-serif text-2xl w-full h-12 text-center py-2'>Order Details</h2>
             <hr className='border-t-2 border-gray-500 w-full mb-5' />
             <table className='text-lg'>

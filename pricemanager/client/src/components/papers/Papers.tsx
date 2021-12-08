@@ -47,8 +47,10 @@ export default function Papers() {
 
     return (
         <div className='z-10 relative'>
-            <div>
-                <Link to='settings/papers'>Open Settings</Link>
+            <div className='mt-5 flex flex-row justify-end'>
+                <span className='bg-gray-100 py-2 px-4 mr-5 cursor-pointer text-lg border-2 border-gray-500 rounded-lg'>
+                    <Link to='settings/papers'>Open Settings</Link>
+                </span>
             </div>
             <div className="grid grid-cols-3 gap-4 p-5">
                 {/* IMAGE DIMENSIONS */}
