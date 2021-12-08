@@ -16,11 +16,15 @@ export default function Cart() {
         grandTotal: 0
     });
 
+    const cartSum = (cartProp: string) => {
+        return cart.map((obj: CartItem) => obj[cartProp]).reduce((prev: number, next: number) => prev + next, 0);
+    }
+
     useEffect(() => {
-        const netTotalsSum = cart.map(obj => obj.netTotal).reduce((prev, next) => prev + next, 0);
-        const discountSum = cart.map(obj => obj.discount).reduce((prev, next) => prev + next, 0);
-        const vatSum = cart.map(obj => obj.vat).reduce((prev, next) => prev + next, 0);
-        const grandTotalSum = cart.map(obj => obj.subTotal).reduce((prev, next) => prev + next, 0);
+        const netTotalsSum = cartSum('netTotal');
+        const discountSum = cartSum('discount');
+        const vatSum = cartSum('vat');
+        const grandTotalSum = cartSum('subTotal');
         setFinalTotals({
             netTotal: netTotalsSum,
             discount: discountSum,
