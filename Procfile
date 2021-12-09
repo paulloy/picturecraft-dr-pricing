@@ -1,0 +1,1 @@
+web: gunicorn pricemanager.wsgi:application
