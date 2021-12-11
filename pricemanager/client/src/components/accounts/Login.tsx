@@ -22,7 +22,7 @@ export default function Login() {
         });
     }
 
-    const onFormSubmission = (e: FormEvent<HTMLInputElement>) => {
+    const onFormSubmission = (e: FormEvent<HTMLFormElement>) => {
         e.preventDefault();
         const { username, password } = form;
         dispatch(loginUser(username, password));
@@ -46,7 +46,7 @@ export default function Login() {
                     <button className='w-full mt-3 py-3 px-2 text-lg text-center bg-blue-200'>Login</button>
                 </div>
                 <div>
-                    <button className='w-full mt-10 bg-gray-100 p-1'>Login as Guest</button>
+                    <button onClick={() => dispatch(loginUser('guest', 'UnCommonPassword'))} className='w-full mt-10 bg-gray-100 p-1'>Login as Guest</button>
                 </div>
             </form>
         </>
