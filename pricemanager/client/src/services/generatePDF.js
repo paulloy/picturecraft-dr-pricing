@@ -1,43 +1,11 @@
-import React, { useEffect, useState } from "react";
-import { useDispatch, useSelector } from "react-redux";
-import { CartItem, removeFromCart } from "../../actions/cart";
-import { RootState } from '../../reducers/index';
-import generatePDF from "../../services/generatePDF";
+import jsPDF from "jspdf";
+import React from 'react';
+import { renderToString } from "react-dom/server";
+import html2canvas from "html2canvas";
 
-
-export default function Cart() {
-    const dispatch = useDispatch();
-
-    const cart = useSelector((state: RootState) => state.cart.cart);
-
-    const [finalTotals, setFinalTotals] = useState({
-        netTotal: 0,
-        discount: 0,
-        vat: 0,
-        grandTotal: 0
-    });
-
-    const cartSum = (cartProp: string) => {
-        return cart.map((obj: CartItem) => obj[cartProp]).reduce((prev: number, next: number) => prev + next, 0);
-    }
-
-    useEffect(() => {
-        const netTotalsSum = cartSum('netTotal');
-        const discountSum = cartSum('discount');
-        const vatSum = cartSum('vat');
-        const grandTotalSum = cartSum('subTotal');
-        setFinalTotals({
-            netTotal: netTotalsSum,
-            discount: discountSum,
-            vat: vatSum,
-            grandTotal: grandTotalSum
-        });
-    }, [cart]);
-
-    return (
-        <div id="displayAsPdf" className='z-10 p-5 z-10 relative top-0 border border-black right-0 bg-blue-100'>
-            <h2 className="text-3xl mt-4 mb-8 text-center">Cart</h2>
-            <table className="mx-auto mb-5">
+export default function generatePDF(cart, finalTotals) {
+    const template = (
+        <table id="displayAsPdf" className="mx-auto mb-5">
                 <thead>
                     <tr className="grid grid-cols-9 bg-gray-100">
                         <th className="border border-black py-2 px-4">Paper Type</th>
@@ -55,7 +23,7 @@ export default function Cart() {
                 {
                     cart.length === 0
                     ? null
-                    : cart.map((cartItem: CartItem, index: number) => (
+                    : cart.map((cartItem, index) => (
                         <tr key={index} className="grid grid-cols-9 bg-white">
                             <td className="border border-black py-2 px-4 text-center">{ cartItem.paper }</td>
                             <td className="border border-black py-2 px-4 text-center">{ cartItem.width } { cartItem.unit }</td>
@@ -95,7 +63,23 @@ export default function Cart() {
                     </tr>
                 </tfoot>
             </table>
-            <button onClick={() => generatePDF(cart, finalTotals)}>Download PDF</button>
-        </div>
     );
+
+    const el = document.createElement('div');
+    el.id = 'displayAsPdf';
+
+    let options = {
+        orientation: 'landscape',
+        format: 'a4'
+    }
+
+    const displayAsPdf = document.getElementById('displayAsPdf');
+
+    html2canvas(displayAsPdf)
+        .then(canvas => {
+            const imgData = canvas.toDataURL('image/png');
+            const pdf = new jsPDF(options);
+            pdf.addImage(imgData, 'PNG', 0, 0);
+            pdf.save('download.pdf');
+        });   
 }
