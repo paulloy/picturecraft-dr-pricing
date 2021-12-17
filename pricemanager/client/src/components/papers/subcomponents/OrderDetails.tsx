@@ -40,7 +40,7 @@ export default function OrderDetails({ lengthInputs, lengthUnit, selectedPaper, 
     
     return (
         <div className="flex flex-col relative border-gray-500 border-2 items-center p-5 bg-blue-100 rounded-lg">
-            <h2 className='font-serif text-2xl w-full h-12 text-center py-2'>Order Details</h2>
+            <h2 className='font-sansSerif font-medium text-2xl w-full h-12 text-center py-2'>Order Details</h2>
             <hr className='border-t-2 border-gray-500 w-full mb-5' />
             <table className='text-lg'>
                 <tbody>
@@ -56,17 +56,18 @@ export default function OrderDetails({ lengthInputs, lengthUnit, selectedPaper, 
                         <td className="text-right font-semibold">Paper Type</td>
                         <td className="text-left">{ selectedPaper.length === 0 ? <span className='text-red-600'>'Please select a paper'</span> : selectedPaper[0].name }</td>
                     </tr>
-                    <tr className="grid grid-cols-2 gap-4">
+                    <tr className="grid grid-cols-2 gap-4 pb-5">
                         <td className="text-right font-semibold">Quantity</td>
                         <td className="text-left">{ qty }</td>
                     </tr>
-                    <tr className="grid grid-cols-2 gap-4">
+                    <tr className="border-2 border-gray-500"/>
+                    <tr className="grid grid-cols-2 gap-4 pt-5">
                         <td className="text-right font-semibold">Net Total</td>
                         <td className="text-left">£{ totals.netTotal.toFixed(2) }</td>
                     </tr>
                     <tr className="grid grid-cols-2 gap-4">
                         <td className="text-right font-semibold">Discount</td>
-                        <td className="text-left text-red-600"><span className="mr-2">{ totals.discountPercentage }%</span>- £{ totals.discount.toFixed(2) }</td>
+                        <td className="text-left"><span className="mr-2">{ totals.discountPercentage }%</span>- £{ totals.discount.toFixed(2) }</td>
                     </tr>
                     <tr className="grid grid-cols-2 gap-4">
                         <td className="text-right font-semibold">VAT</td>
@@ -79,7 +80,7 @@ export default function OrderDetails({ lengthInputs, lengthUnit, selectedPaper, 
                 </tbody>
             </table>
             <hr className='border-t-2 border-gray-500 w-full my-5' />
-            <button className="bg-blue-300 p-2 absolute bottom-10 w-64 text-lg" onClick={() => handleAddToCart()}>Add To Cart</button>
+            <button className="bg-blue-300 hover:bg-blue-400 rounded-lg p-2 absolute bottom-5 w-64 text-lg" onClick={() => handleAddToCart()}>Add To Cart</button>
         </div>
     );
 }

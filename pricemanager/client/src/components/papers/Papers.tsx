@@ -4,6 +4,8 @@ import { getPapers } from '../../actions/papers';
 import { RootState } from '../../reducers';
 import { Link } from 'react-router-dom';
 
+import './papers.css';
+
 // Sub-components
 import OrderDetails from './subcomponents/OrderDetails';
 import PaperSelector from './subcomponents/PaperSelector';
@@ -52,7 +54,7 @@ export default function Papers() {
                     <Link to='settings/papers'>Open Settings</Link>
                 </span>
             </div>
-            <div className="grid grid-cols-3 gap-4 p-5">
+            <div className="grid grid-cols-3 gap-5 p-5">
                 {/* IMAGE DIMENSIONS */}
                 <ImageDimensions 
                     lengthInputs={lengthInputs}
