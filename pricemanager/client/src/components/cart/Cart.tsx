@@ -22,15 +22,11 @@ export default function Cart() {
     }
 
     useEffect(() => {
-        const netTotalsSum = cartSum('netTotal');
-        const discountSum = cartSum('discount');
-        const vatSum = cartSum('vat');
-        const grandTotalSum = cartSum('subTotal');
         setFinalTotals({
-            netTotal: netTotalsSum,
-            discount: discountSum,
-            vat: vatSum,
-            grandTotal: grandTotalSum
+            netTotal: cartSum('netTotal'),
+            discount: cartSum('discount'),
+            vat: cartSum('vat'),
+            grandTotal: cartSum('subTotal')
         });
     }, [cart]);
 
@@ -39,16 +35,16 @@ export default function Cart() {
             <h2 className="text-3xl mt-4 mb-8 text-center">Cart</h2>
             <table className="mx-auto mb-5">
                 <thead>
-                    <tr className="grid grid-cols-9 bg-gray-100">
-                        <th className="border border-black py-2 px-4">Paper Type</th>
-                        <th className="border border-black py-2 px-4">Width</th>
-                        <th className="border border-black py-2 px-4">Length</th>
-                        <th className="border border-black py-2 px-4">Quantity</th>
-                        <th className="border border-black py-2 px-4">Net-Total</th>
-                        <th className="border border-black py-2 px-4">Discount</th>
-                        <th className="border border-black py-2 px-4">VAT</th>
-                        <th className="border border-black py-2 px-4">Sub Total</th>
-                        <th className="border border-black py-2 px-4 bg-black" />
+                    <tr className="grid grid-cols-9">
+                        <th className="border border-black py-2 bg-gray-100 px-4">Paper Type</th>
+                        <th className="border border-black py-2 bg-gray-100 px-4">Width</th>
+                        <th className="border border-black py-2 bg-gray-100 px-4">Length</th>
+                        <th className="border border-black py-2 bg-gray-100 px-4">Quantity</th>
+                        <th className="border border-black py-2 bg-gray-100 px-4">Net-Total</th>
+                        <th className="border border-black py-2 bg-gray-100 px-4">Discount</th>
+                        <th className="border border-black py-2 bg-gray-100 px-4">VAT</th>
+                        <th className="border border-black py-2 bg-gray-100 px-4">Sub Total</th>
+                        <th />
                     </tr>
                 </thead>
                 <tbody>
@@ -96,6 +92,7 @@ export default function Cart() {
                 </tfoot>
             </table>
             <button onClick={() => generatePDF(cart, finalTotals)}>Download PDF</button>
+            
         </div>
     );
 }
