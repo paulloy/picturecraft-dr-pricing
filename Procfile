@@ -1,1 +1,1 @@
-web: gunicorn pricemanager.manage.wsgi:application
+web: gunicorn pricemanager.wsgi:application
