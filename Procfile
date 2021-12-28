@@ -1,1 +1,1 @@
-web: gunicorn pricemanager.pricemanager.wsgi:application
+web: gunicorn --chdir /pricemanager pricemanager.wsgi:application
